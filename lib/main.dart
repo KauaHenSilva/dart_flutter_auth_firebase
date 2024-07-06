@@ -1,4 +1,5 @@
 import 'package:dart_flutter_auth_firebase/auth/auth_page.dart';
+import 'package:dart_flutter_auth_firebase/auth/forgot_password_page.dart';
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
 import 'package:dart_flutter_auth_firebase/my_theme_data.dart';
 import 'package:dart_flutter_auth_firebase/pages/home_page.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         MyRoutes.authPage: (context) => const AuthPage(),
         MyRoutes.mainPage: (context) => const MainPage(),
         MyRoutes.homePage: (context) => const HomePage(),
+        MyRoutes.forgotPasswordPage: (context) => const ForgotPasswordPage(),
       },
     );
   }

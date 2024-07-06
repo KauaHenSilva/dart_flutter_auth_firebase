@@ -31,6 +31,11 @@ class Auth extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 
+  Future<void> resetPassword(String email, BuildContext ctx) async {
+    final auth = FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    showDialogConfirm(ctx, auth);
+  }
+
   void showDialogUserCredential(
     BuildContext ctx,
     Future<UserCredential> userCredential,
@@ -66,6 +71,47 @@ class Auth extends ChangeNotifier {
             }
             return const SizedBox.shrink();
           },
+        );
+      },
+    );
+  }
+
+  void showDialogConfirm(BuildContext ctx, Future<void> future) {
+    future
+        .then(
+      (value) => showDialog(
+        context: ctx,
+        builder: (context) => AlertDialog(
+          title: const Text("Success"),
+          content: const Text("Operation completed successfully"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        ),
+      ),
+    )
+        .onError(
+      (error, stackTrace) {
+        final mensageError = ExeptionsAuth(error: error);
+        showDialog(
+          context: ctx,
+          builder: (context) => AlertDialog(
+            title: Text(mensageError.errorTitle),
+            content: Text(mensageError.getErrorMessage),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text("Close"),
+              ),
+            ],
+          ),
         );
       },
     );
