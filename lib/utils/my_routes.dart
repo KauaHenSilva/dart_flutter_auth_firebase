@@ -1,3 +1,3 @@
 class MyRoutes {
-  static const String homeRoute = "/home";
+  static const String loginPage = "/loginPage";
 }
