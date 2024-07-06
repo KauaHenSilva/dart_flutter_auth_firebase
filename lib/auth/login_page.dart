@@ -24,7 +24,10 @@ class _LoginPageState extends State<LoginPage> {
 
       final providerAuth = Provider.of<Auth>(context, listen: false);
       providerAuth.signIn(
-          values['email'].toString(), values['password'].toString(), context);
+        values['email'].toString(),
+        values['password'].toString(),
+        context,
+      );
     }
   }
 
