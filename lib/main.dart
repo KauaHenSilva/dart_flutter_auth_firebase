@@ -1,8 +1,8 @@
+import 'package:dart_flutter_auth_firebase/auth/auth_page.dart';
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
 import 'package:dart_flutter_auth_firebase/my_theme_data.dart';
-import 'package:dart_flutter_auth_firebase/routes/home_page.dart';
-import 'package:dart_flutter_auth_firebase/routes/login_page.dart';
-import 'package:dart_flutter_auth_firebase/routes/main_page.dart';
+import 'package:dart_flutter_auth_firebase/pages/home_page.dart';
+import 'package:dart_flutter_auth_firebase/pages/main_page.dart';
 import 'package:dart_flutter_auth_firebase/utils/my_routes.dart';
 
 import 'firebase_options.dart';
@@ -46,9 +46,9 @@ class MyApp extends StatelessWidget {
       theme: MyThemeData.light,
       initialRoute: MyRoutes.mainPage,
       routes: {
-        MyRoutes.loginPage: (context) => const LoginPage(),
-        MyRoutes.homePage: (context) => const HomePage(),
+        MyRoutes.authPage: (context) => const AuthPage(),
         MyRoutes.mainPage: (context) => const MainPage(),
+        MyRoutes.homePage: (context) => const HomePage(),
       },
     );
   }
