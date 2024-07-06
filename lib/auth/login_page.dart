@@ -1,4 +1,5 @@
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
+import 'package:dart_flutter_auth_firebase/utils/my_routes.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_elevation_button.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_form_text_field.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +24,7 @@ class _LoginPageState extends State<LoginPage> {
 
       final providerAuth = Provider.of<Auth>(context, listen: false);
       providerAuth.signIn(
-        values['email'].toString(),
-        values['password'].toString(),
-        context
-      );
+          values['email'].toString(), values['password'].toString(), context);
     }
   }
 
@@ -47,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 75),
                 Text(
                   "Sign in",
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -79,6 +77,24 @@ class _LoginPageState extends State<LoginPage> {
                             FormBuilderValidators.required(),
                             FormBuilderValidators.minLength(6)
                           ]),
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  MyRoutes.forgotPasswordPage,
+                                );
+                              },
+                              child: const Text(
+                                'Forgot password?',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 10),
                         MyElevationButton(

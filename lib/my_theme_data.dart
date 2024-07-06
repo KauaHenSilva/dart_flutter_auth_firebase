@@ -5,13 +5,15 @@ class MyThemeData {
   static ThemeData get light {
     return ThemeData.light().copyWith(
       textTheme: ThemeData.light().textTheme.copyWith(
-            titleLarge: TextStyle(
+            displayLarge: TextStyle(
               fontSize: 52,
               fontWeight: FontWeight.bold,
               fontFamily: GoogleFonts.bebasNeue().fontFamily,
+              color: Colors.black87,
             ),
             displayMedium: const TextStyle(
               fontSize: 20,
+              color: Colors.black26,
             ),
           ),
     );

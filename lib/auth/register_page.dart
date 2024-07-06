@@ -47,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 75),
                 Text(
                   "Sign up",
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(height: 16),
                 Text(
