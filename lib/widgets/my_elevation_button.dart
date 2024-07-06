@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyElevationButton extends StatelessWidget {
   final String text;
-  // onPressed
-  final void Function() onPressed;
+  final VoidCallback onPressed;
 
   const MyElevationButton({
     super.key,

@@ -7,7 +7,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final VoidCallback onSignUp;
+  const LoginPage({super.key, required this.onSignUp});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -21,9 +22,10 @@ class _LoginPageState extends State<LoginPage> {
       final values = _formKey.currentState!.value;
 
       final providerAuth = Provider.of<Auth>(context, listen: false);
-      providerAuth.signUp(
+      providerAuth.signIn(
         values['email'].toString(),
         values['password'].toString(),
+        context
       );
     }
   }
@@ -44,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 75),
                 Text(
-                  "Hello again!",
+                  "Sign in",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 16),
@@ -88,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                           children: [
                             const Text('Don\'t have an account?'),
                             TextButton(
-                              onPressed: () {},
+                              onPressed: widget.onSignUp,
                               child: const Text(
                                 'Sign up',
                                 style: TextStyle(color: Colors.blue),
