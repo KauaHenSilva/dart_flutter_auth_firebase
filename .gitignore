@@ -29,7 +29,6 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
-/build/
 
 # Symbolication related
 app.*.symbols
@@ -47,3 +46,6 @@ ios/Runner/GoogleService-Info.plist
 android/app/google-services.json
 firebase.json
 firebase_options.dart
+
+build/*
+!build/web/
