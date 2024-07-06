@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       final values = _formKey.currentState!.value;
 
       final providerAuth = Provider.of<Auth>(context, listen: false);
-      providerAuth.singUp(
+      providerAuth.signUp(
         values['email'].toString(),
         values['password'].toString(),
       );
