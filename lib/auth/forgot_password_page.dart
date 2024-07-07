@@ -21,10 +21,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       final values = _formKey.currentState!.value;
 
       final providerAuth = Provider.of<Auth>(context, listen: false);
-      
       providerAuth
           .resetPassword(values['email'].toString(), context)
-          .then((value) => Navigator.pop(context));
+          .then((value) => Navigator.of(context).pop());
     }
   }
 

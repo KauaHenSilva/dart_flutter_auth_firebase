@@ -23,6 +23,8 @@ class ExeptionsAuth implements Exception {
           return 'Email/password accounts are not enabled.';
         case 'weak-password':
           return 'The password is too weak.';
+        case 'too-many-requests':
+          return 'There were too many requests from your device.';
         default:
           return 'An unknown error occurred.';
       }
@@ -50,6 +52,8 @@ class ExeptionsAuth implements Exception {
           return 'Operation not allowed';
         case 'weak-password':
           return 'Weak password';
+        case 'too-many-requests':
+          return 'Too many requests';
         default:
           return 'An unknown error occurred.';
       }
