@@ -45,6 +45,7 @@ class Auth extends ChangeNotifier {
                 );
               }
             }
+            Navigator.of(context).pop();
             return const SizedBox.shrink();
           },
         );
