@@ -1,56 +1,38 @@
+// ignore_for_file: invalid_return_type_for_catch_error, null_argument_to_non_null_type
+
 import 'package:dart_flutter_auth_firebase/exeptions/exeptions_auth.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_dialogs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends ChangeNotifier {
-  Future<void> signUp(String email, String password, BuildContext ctx) async {
-    final auth = FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    showDialogUserCredential(ctx, auth);
+  void signUp(String email, String password, BuildContext ctx) {
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .onError((error, stackTrace) {
+      final mensageError = ExeptionsAuth(error: error);
+      myShowDialogErrorAuth(ctx, mensageError);
+      return Future<UserCredential>.value(null);
+    });
   }
 
-  Future<void> signIn(String email, String password, BuildContext ctx) async {
-    final auth = FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    showDialogUserCredential(ctx, auth);
+  void signIn(String email, String password, BuildContext ctx) async {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password)
+        .catchError((e) {
+      final mensageError = ExeptionsAuth(error: e);
+      myShowDialogErrorAuth(ctx, mensageError);
+      return null;
+    });
   }
 
   Future<void> resetPassword(String email, BuildContext ctx) async {
-    final auth = FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    return myShowDialogConfirm(ctx, auth);
-  }
-
-  void showDialogUserCredential(BuildContext ctx, Future<UserCredential> uC) {
-    showDialog(
-      context: ctx,
-      builder: (context) {
-        return FutureBuilder<UserCredential>(
-          future: uC,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                final mensageError = ExeptionsAuth(error: snapshot.error);
-                myShowDialogErrorAuth(context, mensageError).then(
-                  (value) => Navigator.of(context).pop(),
-                );
-              }
-            }
-            Navigator.of(context).pop();
-            return const SizedBox.shrink();
-          },
-        );
-      },
-    );
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) {
+      myShowDialog(ctx, "Success", "Check your email to reset your password");
+    }).catchError((e) {
+      final mensageError = ExeptionsAuth(error: e);
+      myShowDialogErrorAuth(ctx, mensageError);
+    });
   }
 
   Future<void> signOut() async {
