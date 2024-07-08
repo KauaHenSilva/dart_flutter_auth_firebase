@@ -1,5 +1,5 @@
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
-import 'package:dart_flutter_auth_firebase/widgets/my_elevation_button.dart';
+import 'package:dart_flutter_auth_firebase/widgets/my_elevated_button.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_form_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -98,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ]),
                         ),
                         const SizedBox(height: 10),
-                        MyElevationButton(
+                        MyElevatedButton(
                           text: 'Sing up',
                           onPressed: signUp,
                         ),

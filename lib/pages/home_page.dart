@@ -1,5 +1,5 @@
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
-import 'package:dart_flutter_auth_firebase/widgets/my_elevation_button.dart';
+import 'package:dart_flutter_auth_firebase/widgets/my_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     void singOut() {
       final providerAuth = Provider.of<Auth>(context, listen: false);
-      providerAuth.signOut();
+      providerAuth.signOut(context);
     }
 
     return Scaffold(
@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text("Logged in!"),
-            MyElevationButton(
+            MyElevatedButton(
               onPressed: singOut,
               text: "Sign out",
             )

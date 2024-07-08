@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class ExeptionsAuth implements Exception {
+class ExceptionsAuth implements Exception {
   final Object? error;
-  ExeptionsAuth({required this.error});
+  ExceptionsAuth({required this.error});
 
   String get getErrorMessage {
     if (error is FirebaseAuthException) {
@@ -33,7 +33,7 @@ class ExeptionsAuth implements Exception {
     }
   }
 
-  String get errorTitle {
+  String get getErrorTitle {
     if (error is FirebaseAuthException) {
       switch ((error as FirebaseAuthException).code) {
         case 'invalid-credential':
