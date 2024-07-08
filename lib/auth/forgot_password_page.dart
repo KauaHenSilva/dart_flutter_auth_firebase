@@ -1,5 +1,5 @@
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
-import 'package:dart_flutter_auth_firebase/widgets/my_elevation_button.dart';
+import 'package:dart_flutter_auth_firebase/widgets/my_elevated_button.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_form_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -21,9 +21,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       final values = _formKey.currentState!.value;
 
       final providerAuth = Provider.of<Auth>(context, listen: false);
-      providerAuth
-          .resetPassword(values['email'].toString(), context)
-          .then((value) => Navigator.of(context).pop());
+      providerAuth.resetPassword(values['email'].toString(), context);
     }
   }
 
@@ -58,7 +56,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
             ),
             const SizedBox(height: 20),
-            MyElevationButton(
+            MyElevatedButton(
               onPressed: onPasswordReset,
               text: "Reset password",
             )
