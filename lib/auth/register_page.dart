@@ -1,4 +1,7 @@
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
+import 'package:dart_flutter_auth_firebase/models/firestore_database.dart';
+import 'package:dart_flutter_auth_firebase/models/user_model.dart';
+import 'package:dart_flutter_auth_firebase/widgets/my_dialog.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_elevated_button.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_form_text_field.dart';
 import 'package:flutter/material.dart';
@@ -21,12 +24,30 @@ class _RegisterPageState extends State<RegisterPage> {
     if (_formKey.currentState!.saveAndValidate()) {
       final values = _formKey.currentState!.value;
 
-      final providerAuth = Provider.of<Auth>(context, listen: false);
-      providerAuth.signUp(
-        values['email'].toString(),
-        values['password'].toString(),
-        context,
+      final pAuth = Provider.of<Auth>(context, listen: false);
+      final fDatabase = Provider.of<FirestoreDatabase>(context, listen: false);
+
+      final resp = Future.wait(
+        [
+          pAuth.signUp(
+            values['email'].toString(),
+            values['password'].toString(),
+            context,
+          ),
+          fDatabase.addUser(
+            UserModel(
+              id: DateTime.now().toString(),
+              fistName: values['fistName'].toString(),
+              lastName: values['lastName'].toString(),
+              email: values['email'].toString(),
+              age: values['age'].toString(),
+            ),
+            context,
+          ),
+        ],
       );
+
+      MyDialog(context: context, future: resp).show();
     }
   }
 
@@ -40,13 +61,8 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.android,
-                  size: 100,
-                ),
-                const SizedBox(height: 75),
                 Text(
-                  "Sign up",
+                  "Hello there!",
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 const SizedBox(height: 16),
@@ -59,8 +75,34 @@ class _RegisterPageState extends State<RegisterPage> {
                   key: _formKey,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Column(
+                    child: Wrap(
+                      runSpacing: 10,
                       children: [
+                        MyFormTextField(
+                          name: 'fistName',
+                          labelText: 'First Name',
+                          obscureText: false,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(),
+                          ]),
+                        ),
+                        MyFormTextField(
+                          name: 'lastName',
+                          labelText: 'Last Name',
+                          obscureText: false,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(),
+                          ]),
+                        ),
+                        MyFormTextField(
+                          name: 'age',
+                          labelText: 'Age',
+                          obscureText: false,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(),
+                            FormBuilderValidators.numeric(),
+                          ]),
+                        ),
                         MyFormTextField(
                           name: 'email',
                           labelText: 'Email',
@@ -70,7 +112,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             FormBuilderValidators.email(),
                           ]),
                         ),
-                        const SizedBox(height: 10),
                         MyFormTextField(
                           name: 'password',
                           labelText: 'Password',
@@ -80,7 +121,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             FormBuilderValidators.minLength(6)
                           ]),
                         ),
-                        const SizedBox(height: 10),
                         MyFormTextField(
                           name: 'confirmPassword',
                           labelText: 'Confirm Password',
@@ -97,7 +137,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             }
                           ]),
                         ),
-                        const SizedBox(height: 10),
                         MyElevatedButton(
                           text: 'Sing up',
                           onPressed: signUp,
@@ -118,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ],
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:dart_flutter_auth_firebase/auth/auth_page.dart';
 import 'package:dart_flutter_auth_firebase/auth/forgot_password_page.dart';
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
+import 'package:dart_flutter_auth_firebase/models/firestore_database.dart';
 import 'package:dart_flutter_auth_firebase/my_theme_data.dart';
 import 'package:dart_flutter_auth_firebase/pages/home_page.dart';
 import 'package:dart_flutter_auth_firebase/pages/main_page.dart';
@@ -24,6 +25,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Auth()),
+        ChangeNotifierProvider(create: (context) => FirestoreDatabase()),
       ],
       child: const MyApp(),
     ),
