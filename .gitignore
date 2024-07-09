@@ -47,5 +47,5 @@ android/app/google-services.json
 firebase.json
 firebase_options.dart
 
-build/*
-!build/web/
+build/
+# !build/web/

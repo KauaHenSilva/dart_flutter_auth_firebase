@@ -5,14 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends ChangeNotifier {
-  Future<void> signUp(String email, String password, BuildContext ctx) async {
+
+  Future<UserCredential> signUp(String email, String password, BuildContext ctx) async {
     final auth = FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
 
-    MyDialog(context: ctx, future: auth).show();
-    return Future.value(null);
+    return auth;
   }
 
   Future<void> signIn(String email, String password, BuildContext ctx) async {
