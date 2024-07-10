@@ -1,4 +1,5 @@
 import 'package:dart_flutter_auth_firebase/models/auth.dart';
+import 'package:dart_flutter_auth_firebase/widgets/my_dialog.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_elevated_button.dart';
 import 'package:dart_flutter_auth_firebase/widgets/my_form_text_field.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     if (_formKey.currentState!.saveAndValidate()) {
       final values = _formKey.currentState!.value;
 
-      final providerAuth = Provider.of<Auth>(context, listen: false);
-      providerAuth.resetPassword(values['email'].toString(), context);
+      final auth = Provider.of<Auth>(context, listen: false)
+          .resetPassword(values['email'].toString(), context);
+
+      MyDialog(
+        context: context,
+        future: auth,
+        showSuccessDialog: true,
+        messageSuccess: "Check your email to reset your password.",
+        titleSuccess: "Password reset",
+      ).show().then((value) => Navigator.of(context).pop());
     }
   }
 

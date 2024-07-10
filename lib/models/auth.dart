@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Auth extends ChangeNotifier {
+  User? get user => FirebaseAuth.instance.currentUser;
 
-  Future<UserCredential> signUp(String email, String password, BuildContext ctx) async {
+  Future<UserCredential> signUp(
+      String email, String password, BuildContext ctx) async {
     final auth = FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: email,
       password: password,
@@ -25,16 +27,8 @@ class Auth extends ChangeNotifier {
     return Future.value(null);
   }
 
-  void resetPassword(String email, BuildContext ctx) async {
-    final auth = FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-
-    MyDialog(
-      context: ctx,
-      future: auth,
-      showSuccessDialog: true,
-      messageSuccess: "Check your email to reset your password.",
-      titleSuccess: "Password reset",
-    ).show().then((value) => Navigator.of(ctx).pop());
+  Future<void> resetPassword(String email, BuildContext ctx) async {
+    return FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 
   void signOut(BuildContext ctx) async {
