@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 class FirestoreDatabase extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Map<String, dynamic> _dataUser = {};
-  bool _isLoading = false;
 
   Map<String, dynamic> get dataUser => _dataUser;
   List<String> get dataUserKeys => _dataUser.keys.toList();
 
   int get dataUserLen => _dataUser.length;
-  bool get isLoading => _isLoading;
 
   Future<DocumentReference<Map<String, dynamic>>> addUser(
     UserModel user,
@@ -20,18 +18,14 @@ class FirestoreDatabase extends ChangeNotifier {
     return _firestore.collection('users').add(user.toJson());
   }
 
-  void getUsers() async {
-    _isLoading = true;
-    notifyListeners();
-
+  Future<void> getUsers() async {
     _dataUser.clear();
     final snapshot = await _firestore.collection('users').get();
     for (final doc in snapshot.docs) {
       _dataUser[doc.id] = doc.data();
     }
 
-    _isLoading = false;
-    notifyListeners();
+    return Future.value(null);
   }
 
   void printDebug() {
