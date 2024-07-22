@@ -45,19 +45,19 @@ jobs:
             file: build/app/outputs/apk/release/app-release.apk
 
       - name: Extract version from pubspec.yaml
-          id: extract_version
-          run: |
-            version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
-            echo "VERSION=$version" >> $GITHUB_ENV
+        id: extract_version
+        run: |
+          version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+          echo "VERSION=$version" >> $GITHUB_ENV
 
       - name: Check if Tag Exists
-          id: check_tag
-          run: |
-            if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
-              echo "TAG_EXISTS=true" >> $GITHUB_ENV
-            else
-              echo "TAG_EXISTS=false" >> $GITHUB_ENV
-            fi
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+            echo "TAG_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "TAG_EXISTS=false" >> $GITHUB_ENV
+          fi
 
       - name: Modify Tag
         if: env.TAG_EXISTS == 'true'
