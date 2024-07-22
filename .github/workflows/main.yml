@@ -44,9 +44,9 @@ jobs:
             groups: pre-tester
             file: build/app/outputs/apk/release/app-release.apk
 
-      - name: Push to Releases
-        uses: ncipollo/release-action@v1
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
         with:
-          artifacts: "build/app/outputs/apk/release/app-release.apk"
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          name: Releases
+          path: |
+             build/app/outputs/apk/release/app-release.apk
