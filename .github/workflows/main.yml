@@ -29,7 +29,7 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter build apk
+      - run: flutter build apk --no-tree-shake-icons
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
@@ -38,6 +38,6 @@ jobs:
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
             appId: ${{secrets.APPID}}
-            token: ${{secrets.TOKEN}}
++           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
             groups: pre-tester
             file: build/app/outputs/apk/release/app-release.apk
