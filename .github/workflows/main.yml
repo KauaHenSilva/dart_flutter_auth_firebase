@@ -44,9 +44,31 @@ jobs:
             groups: pre-tester
             file: build/app/outputs/apk/release/app-release.apk
 
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+      - name: Extract version from pubspec.yaml
+          id: extract_version
+          run: |
+            version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+            echo "VERSION=$version" >> $GITHUB_ENV
+
+      - name: Check if Tag Exists
+          id: check_tag
+          run: |
+            if git rev-parse "v${{ env.VERSION }}" >/dev/null 2>&1; then
+              echo "TAG_EXISTS=true" >> $GITHUB_ENV
+            else
+              echo "TAG_EXISTS=false" >> $GITHUB_ENV
+            fi
+
+      - name: Modify Tag
+        if: env.TAG_EXISTS == 'true'
+        id: modify_tag
+        run: |
+          new_version="${{ env.VERSION }}-build-${{ github.run_number }}"
+          echo "VERSION=$new_version" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
         with:
-          name: Releases
-          path: |
-             build/app/outputs/apk/release/app-release.apk
+          artifacts: "build/app/outputs/apk/release/app-release.apk"
+          tag: v${{ env.VERSION }}
+          token: ${{ secrets.TOKEN }}
