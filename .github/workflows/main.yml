@@ -29,11 +29,13 @@ jobs:
         with:
           channel: "stable"
       - run: flutter pub get
-      - run: flutter build apk --no-tree-shake-icons
+      - run: flutter build apk --release
+
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
+
       - name: upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -41,3 +43,10 @@ jobs:
             serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
             groups: pre-tester
             file: build/app/outputs/apk/release/app-release.apk
+
+      - name: Push to Releases
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/release/app-release.apk"
+          tag: v1.0.${{ github.run_number }}
+          token: ${{ secrets.TOKEN }}
